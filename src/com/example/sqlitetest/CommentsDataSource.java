@@ -15,7 +15,6 @@ public class CommentsDataSource {
 	private SQLiteDatabase database;
 	private MySQLiteHelper dbHelper;
 	private String[] allColumns = {MySQLiteHelper.COLUMN_ID, MySQLiteHelper.COLUMN_COMMENT};
-	//testde commit a delete
 	
 	
 	//constructor
