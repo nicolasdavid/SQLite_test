@@ -1,4 +1,4 @@
-package com.example.testdatabaseactivity;
+package com.example.sqlitetest;
 
 public class Comment {
 	private long id;
