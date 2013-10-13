@@ -15,10 +15,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		public static final int DATABASE_VERSION = 1;
 		
 		// creation of the database
-		private static final String DATABASE_CREATE = 
-					"create table"
-				+ TABLE_COMMENTS 
-				+ "(" + COLUMN_ID + "integer primary key autoincrement," + COLUMN_COMMENT+ " text not null);" ;
+		  private static final String DATABASE_CREATE = "create table "
+			      + TABLE_COMMENTS + "(" + COLUMN_ID
+			      + " integer primary key autoincrement, " + COLUMN_COMMENT
+			      + " text not null);";
 		
 		//constructor
 		public MySQLiteHelper(Context context){
