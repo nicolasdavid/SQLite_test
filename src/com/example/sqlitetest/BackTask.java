@@ -1,7 +1,22 @@
 package com.example.sqlitetest;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +24,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 public class BackTask extends AsyncTask<String, Integer, Integer>{
+	private static final String TAG_COMMENTS = "comments";
+	private static final String TAG_ID = "comments_id";
+	private static final String TAG_DESCRIPTION = "comments_description";
+	
 	Activity mContext;
 	private ProgressBar mProgressBar;
 	
@@ -27,7 +46,7 @@ public class BackTask extends AsyncTask<String, Integer, Integer>{
 		
 	protected Integer doInBackground(String... params) { 
 		// Here we do useless work, you have to put here what you have to do
-				for (int i = 0; i< 100; i++){
+		/*		for (int i = 0; i< 100; i++){
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
@@ -40,7 +59,13 @@ public class BackTask extends AsyncTask<String, Integer, Integer>{
 					// Cette fonction appelle la fonction onProgressUpdate()
 					// This function call onProgressUpdate()
 					publishProgress(progress);
-				}
+				}*/
+		String commentToParse = readCommentFeed();
+		JSONObject jsonComment = parseComment(commentToParse);
+		Log.w("Debug","parsing done");
+		Boolean result  = recComment(jsonComment);
+		if (result) { Log.w("Debug","parsing done");} ;
+		
 				return null;
 				
     }
@@ -59,7 +84,73 @@ public class BackTask extends AsyncTask<String, Integer, Integer>{
         Toast.makeText(mContext, "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
         super.onPostExecute(result);
     }
-
+    
+    //connexion vers l'exterieur
+    public String readCommentFeed() {
+        StringBuilder builder = new StringBuilder();
+        HttpClient client = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet("http://192.168.0.17/SQLite/");
+        try {
+          HttpResponse response = client.execute(httpGet);
+          StatusLine statusLine = response.getStatusLine();
+          int statusCode = statusLine.getStatusCode();
+          if (statusCode == 200) {
+            HttpEntity entity = response.getEntity();
+            InputStream content = entity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+            String line;
+            while ((line = reader.readLine()) != null) {
+              builder.append(line + "\n");
+            }
+          } else {
+            Log.e(MainActivity.class.toString(), "Failed to download file");
+          }
+        } catch (ClientProtocolException e) {
+          e.printStackTrace();
+        } catch (IOException e) {
+          e.printStackTrace();
+        } 
+        return builder.toString();
+      }
+    
+    
+    public JSONObject parseComment(String commentToParse){
+        try {
+        	JSONObject jObj = new JSONObject(commentToParse); 
+        	return jObj; //TO DO : is that OK ? or must we use an "if" condition at the end of the method ? 
+        	
+           } catch (JSONException e) {
+               Log.e("JSON Parser", "Error parsing data " + e.toString());
+               return (JSONObject) null;
+           }  
+   }
+    
+    public Boolean recComment(JSONObject jsonComment) {
+        CommentsDataSource datasource = new CommentsDataSource(mContext);
+        datasource.open();
+         
+        try {
+            JSONArray comments = jsonComment.getJSONArray(TAG_COMMENTS);
+              
+            for(int i = 0; i < comments.length(); i++){
+                Comment comment = null;
+                JSONObject c = comments.getJSONObject(i);
+ 
+                Long id = c.getLong(TAG_ID);
+                String descr = c.getString(TAG_DESCRIPTION);
+ 
+                comment = datasource.createComment(descr);
+            }
+            datasource.close();
+            return true;
+             
+        } catch (JSONException e) {
+            e.printStackTrace();
+            datasource.close();
+            return false;
+        }
+ 
+    }
 
 
 }

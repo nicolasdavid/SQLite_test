@@ -49,6 +49,65 @@ public class CommentsDataSource {
 		return newComment;
 	}
 	
+	//surcharge
+	public Comment createComment (long id, String comment){
+        Boolean exist = existCommentWithId(id);
+        
+        if(exist == true){
+            Comment existComment = getCommentWithId(id);
+            Comment updatedComment = updateComment(id, existComment);
+            return updatedComment;
+        }
+        else {
+            ContentValues values = new ContentValues();
+            values.put(MySQLiteHelper.COLUMN_ID, id);
+            values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
+            long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null,
+                    values);
+            Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
+                    allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
+                    null, null, null);
+            cursor.moveToFirst();
+            Comment newComment = cursorToComment(cursor);
+            cursor.close();
+            return newComment;
+        }
+    }
+	
+	public Comment updateComment(Long id, Comment comment){
+        ContentValues values = new ContentValues();
+ 
+        values.put(MySQLiteHelper.COLUMN_ID, comment.getId());
+        values.put(MySQLiteHelper.COLUMN_COMMENT, comment.getComment());
+
+ 
+        database.update(MySQLiteHelper.TABLE_COMMENTS, values, MySQLiteHelper.COLUMN_ID + " = " +comment.getId(), null);
+ 
+        return getCommentWithId(comment.getId());
+    }
+	
+    public Comment getCommentWithId(Long id){
+        Cursor c = database.query(MySQLiteHelper.TABLE_COMMENTS, allColumns, MySQLiteHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
+        c.moveToFirst();
+        Comment contact = cursorToComment(c);
+        c.close();
+        return contact;
+    }
+    
+    public Boolean existCommentWithId(Long id){
+        Cursor c = database.query(MySQLiteHelper.TABLE_COMMENTS, allColumns, MySQLiteHelper.COLUMN_ID + " = \"" + id +"\"", null, null, null, null);
+        if(c.getCount()>0){
+            c.close();
+            return true;
+        }
+        else {
+            c.close();
+            return false;
+        }
+    }
+	
+	
+	
 	public void deleteComment(Comment comment){
 		long id = comment.getId();
 		System.out.println("Comment deleted with id: "+ id);

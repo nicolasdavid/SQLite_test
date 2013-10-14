@@ -73,6 +73,16 @@ public class MainActivity extends ListActivity {
     	datasource.close();
     	super.onPause();
     }
+    
+    
+    public void refreshList(){      
+    	List<Comment> values = datasource.getAllComments();
+
+        ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this, android.R.layout.simple_expandable_list_item_1,values);
+        setListAdapter(adapter);
+    	
+        
+   }
 
     //redefine the Onclick actions thanks to an attribute 
     private OnClickListener clickListenerBoutonsAdd = new OnClickListener(){
@@ -104,8 +114,10 @@ public class MainActivity extends ListActivity {
     
     private OnClickListener clickListenerBackTask = new OnClickListener(){
     	public void onClick(View view){
+    			
 				BackTask calcul = new BackTask(MainActivity.this);
 				calcul.execute();
+				refreshList();
     	};
     };
     
