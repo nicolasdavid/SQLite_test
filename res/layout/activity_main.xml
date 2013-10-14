@@ -23,12 +23,37 @@
             android:text="Delete First" 
             android:onClick="onClick"/>
         
-    </LinearLayout>
+      <Button
+        android:layout_marginTop="10dp"
+        android:id="@+id/btnLaunch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Lancer la tâche" />
+      
+      </LinearLayout>
+    
+    <TextView        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Progression de la tâche asynchrone:" />
+
+    <ProgressBar
+        android:id="@+id/pBAsync"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content" />   
+        
+    
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/hello" />
+    
+    
 
 </LinearLayout> 
