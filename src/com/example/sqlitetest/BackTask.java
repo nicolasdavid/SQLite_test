@@ -81,6 +81,7 @@ public class BackTask extends AsyncTask<String, Integer, Integer>{
     @Override
     protected void onPostExecute(Integer result) {
     	this.mProgressBar.setVisibility(View.GONE);
+    	((MainActivity) mContext).refreshList();
         Toast.makeText(mContext, "Le traitement asynchrone est terminé", Toast.LENGTH_SHORT).show();
         super.onPostExecute(result);
     }
@@ -139,7 +140,7 @@ public class BackTask extends AsyncTask<String, Integer, Integer>{
                 Long id = c.getLong(TAG_ID);
                 String descr = c.getString(TAG_DESCRIPTION);
  
-                comment = datasource.createComment(descr);
+                comment = datasource.createComment(id, descr);
             }
             datasource.close();
             return true;

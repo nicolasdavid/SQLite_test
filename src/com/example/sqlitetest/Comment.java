@@ -23,7 +23,7 @@ public class Comment {
 	//will be used by the ArayAdapter in the ListView
 	@Override
 	public String toString() {
-		return "id =" + id + "&" + "comment =" + comment ;
+		return "id =" + id + "&" + "\n comment =" + comment ;
 	}
 	
 	

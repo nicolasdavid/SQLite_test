@@ -47,7 +47,7 @@ public class MainActivity extends ListActivity {
         datasource = new CommentsDataSource(this);
         datasource.open();
         
-        List<Comment> values = datasource.getAllComments();
+        List<Comment> values = recupComment();
         
         //use the SimpleCursorAdapter to show the elements in a ListView
         ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this, android.R.layout.simple_expandable_list_item_1,values);
@@ -76,14 +76,21 @@ public class MainActivity extends ListActivity {
     
     
     public void refreshList(){      
-    	List<Comment> values = datasource.getAllComments();
-
+    	List<Comment> values = recupComment();
         ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this, android.R.layout.simple_expandable_list_item_1,values);
-        setListAdapter(adapter);
-    	
-        
+        setListAdapter(adapter);  
    }
 
+    public List<Comment> recupComment() {
+        datasource = new CommentsDataSource(this);
+        datasource.open();
+        List<Comment> values = datasource.getAllComments();
+        return values;
+         
+    }
+    
+    
+    
     //redefine the Onclick actions thanks to an attribute 
     private OnClickListener clickListenerBoutonsAdd = new OnClickListener(){
     	public void onClick(View view){
@@ -114,10 +121,10 @@ public class MainActivity extends ListActivity {
     
     private OnClickListener clickListenerBackTask = new OnClickListener(){
     	public void onClick(View view){
-    			
 				BackTask calcul = new BackTask(MainActivity.this);
 				calcul.execute();
-				refreshList();
+				
+
     	};
     };
     
