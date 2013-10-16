@@ -55,7 +55,7 @@ public class CommentsDataSource {
         
         if(exist == true){
             Comment existComment = getCommentWithId(id);
-            Comment updatedComment = updateComment(id, existComment);
+            Comment updatedComment = updateComment(id, existComment, comment);
             return updatedComment;
         }
         else {
@@ -74,12 +74,12 @@ public class CommentsDataSource {
         }
     }
 	
-	public Comment updateComment(Long id, Comment comment){
+	public Comment updateComment(Long id, Comment comment, String descr){
         ContentValues values = new ContentValues();
  
-        values.put(MySQLiteHelper.COLUMN_ID, comment.getId());
-        values.put(MySQLiteHelper.COLUMN_COMMENT, comment.getComment());
-
+        //values.put(MySQLiteHelper.COLUMN_ID, comment.getId());
+        //values.put(MySQLiteHelper.COLUMN_COMMENT, comment.getComment());
+        values.put(MySQLiteHelper.COLUMN_COMMENT, descr);
  
         database.update(MySQLiteHelper.TABLE_COMMENTS, values, MySQLiteHelper.COLUMN_ID + " = " +comment.getId(), null);
  

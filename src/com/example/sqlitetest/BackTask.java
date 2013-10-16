@@ -60,11 +60,17 @@ public class BackTask extends AsyncTask<String, Integer, Integer>{
 					// This function call onProgressUpdate()
 					publishProgress(progress);
 				}*/
+		
 		String commentToParse = readCommentFeed();
 		JSONObject jsonComment = parseComment(commentToParse);
 		Log.w("Debug","parsing done");
 		Boolean result  = recComment(jsonComment);
-		if (result) { Log.w("Debug","parsing done");} ;
+		if (result) {
+			int progress = 100;
+			publishProgress(progress);
+			Log.w("Debug","parsing done");
+		} ;
+
 		
 				return null;
 				
@@ -90,7 +96,7 @@ public class BackTask extends AsyncTask<String, Integer, Integer>{
     public String readCommentFeed() {
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet("http://192.168.0.17/SQLite/");
+        HttpGet httpGet = new HttpGet("http://192.168.34.1/SQLite/");
         try {
           HttpResponse response = client.execute(httpGet);
           StatusLine statusLine = response.getStatusLine();
