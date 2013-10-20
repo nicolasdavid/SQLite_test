@@ -7,6 +7,9 @@ package com.example.sqlitetest;
 import java.util.List;
 import java.util.Random;
 
+import com.example.syncToExt.BackTaskExport;
+import com.example.syncToLocal.BackTaskImport;
+
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,7 +28,8 @@ public class MainActivity extends ListActivity {
 	
 	//creating the widget for AsyncTask
 	//private ProgressBar mProgressBar;
-	private Button mButton;
+	private Button importButton;
+	private Button exportButton;
 	
 
     @Override
@@ -41,7 +45,8 @@ public class MainActivity extends ListActivity {
         
         //Link to id the Widget for the AsyncTask
 	   //mProgressBar = (ProgressBar) findViewById(R.id.pBAsync);
-	    mButton = (Button) findViewById(R.id.btnLaunch);
+	    importButton = (Button) findViewById(R.id.btnLaunchImport);
+	    exportButton = (Button) findViewById(R.id.btnLaunchExport);
         
 	    
         datasource = new CommentsDataSource(this);
@@ -56,7 +61,8 @@ public class MainActivity extends ListActivity {
         
         add.setOnClickListener(clickListenerBoutonsAdd);
         delete.setOnClickListener( clickListenerBoutonsDelete);
-        mButton.setOnClickListener( clickListenerBackTask);
+        importButton.setOnClickListener( clickListenerBackTaskImport);
+        exportButton.setOnClickListener( clickListenerBackTaskExport);
         
         
         
@@ -119,15 +125,23 @@ public class MainActivity extends ListActivity {
     	};
     };
     
-    private OnClickListener clickListenerBackTask = new OnClickListener(){
+    private OnClickListener clickListenerBackTaskImport = new OnClickListener(){
     	public void onClick(View view){
-				BackTask calcul = new BackTask(MainActivity.this);
-				calcul.execute();
+				BackTaskImport calculImport = new BackTaskImport(MainActivity.this);
+				calculImport.execute();
 				
 
     	};
     };
     
+    private OnClickListener clickListenerBackTaskExport = new OnClickListener(){
+    	public void onClick(View view){
+				BackTaskExport calculExport = new BackTaskExport(MainActivity.this);
+				calculExport.execute();
+				
+
+    	};
+    };
     
     
 }
