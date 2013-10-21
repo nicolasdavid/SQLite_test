@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Progression de l&apos;import:" />
+            android:text="import progression" />
 
         <ProgressBar
             android:id="@+id/pBAsync"
@@ -62,12 +62,18 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp" />
-
+		<EditText 
+		    android:id="@+id/toExterneFile"
+		    android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+		    android:hint="write a comment here please"
+		    />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Progression de l&apos;export:" />
+            android:text="export progression" />
 
         <ProgressBar
             android:id="@+id/pBAsyncToExt"

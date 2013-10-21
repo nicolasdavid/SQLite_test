@@ -7,17 +7,19 @@ package com.example.sqlitetest;
 import java.util.List;
 import java.util.Random;
 
-import com.example.syncToExt.BackTaskExport;
-import com.example.syncToLocal.BackTaskImport;
-
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
+
+import com.example.syncToExt.BackTaskExport;
+import com.example.syncToLocal.BackTaskImport;
 
 public class MainActivity extends ListActivity {
 	
@@ -26,11 +28,12 @@ public class MainActivity extends ListActivity {
 	Button delete = null;
 	
 	
+	
 	//creating the widget for AsyncTask
 	//private ProgressBar mProgressBar;
 	private Button importButton;
 	private Button exportButton;
-	
+	EditText toFile = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class MainActivity extends ListActivity {
         //Link to id the Widget for updating database in local
         add = (Button)findViewById(R.id.add);
         delete = (Button)findViewById(R.id.delete);
+        toFile = (EditText)findViewById(R.id.toExterneFile);
         
         //Link to id the Widget for the AsyncTask
 	   //mProgressBar = (ProgressBar) findViewById(R.id.pBAsync);
@@ -143,5 +147,5 @@ public class MainActivity extends ListActivity {
     	};
     };
     
-    
+
 }
