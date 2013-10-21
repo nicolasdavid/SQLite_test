@@ -4,6 +4,7 @@
 
 package com.example.sqlitetest;
 
+
 import java.util.List;
 import java.util.Random;
 
@@ -19,11 +20,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.syncToExt.BackTaskExport;
+import com.example.syncToExt.BackTaskExportAllDB;
 import com.example.syncToLocal.BackTaskImport;
 
 public class MainActivity extends ListActivity {
 	
 	private CommentsDataSource datasource;
+	
+	public CommentsDataSource getDatasource() {
+		return datasource;
+	}
+
+	public void setDatasource(CommentsDataSource datasource) {
+		this.datasource = datasource;
+	}
+
+
+
 	Button add = null;
 	Button delete = null;
 	
@@ -34,6 +47,7 @@ public class MainActivity extends ListActivity {
 	private Button importButton;
 	private Button exportButton;
 	EditText toFile = null;
+	private Button exportDBButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +65,7 @@ public class MainActivity extends ListActivity {
 	   //mProgressBar = (ProgressBar) findViewById(R.id.pBAsync);
 	    importButton = (Button) findViewById(R.id.btnLaunchImport);
 	    exportButton = (Button) findViewById(R.id.btnLaunchExport);
+	    exportDBButton = (Button) findViewById(R.id.btnLaunchDBExport);
         
 	    
         datasource = new CommentsDataSource(this);
@@ -67,6 +82,7 @@ public class MainActivity extends ListActivity {
         delete.setOnClickListener( clickListenerBoutonsDelete);
         importButton.setOnClickListener( clickListenerBackTaskImport);
         exportButton.setOnClickListener( clickListenerBackTaskExport);
+        exportDBButton.setOnClickListener( clickListenerBackTaskExportAllDB);
         
         
         
@@ -142,6 +158,15 @@ public class MainActivity extends ListActivity {
     	public void onClick(View view){
 				BackTaskExport calculExport = new BackTaskExport(MainActivity.this);
 				calculExport.execute();
+				
+
+    	};
+    };
+    
+    private OnClickListener clickListenerBackTaskExportAllDB = new OnClickListener(){
+    	public void onClick(View view){
+				BackTaskExportAllDB calculExportDB = new BackTaskExportAllDB(MainActivity.this);
+				calculExportDB.execute();
 				
 
     	};
