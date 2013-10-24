@@ -14,7 +14,13 @@ public class CommentsDataSource {
 	//Database fields
 	private SQLiteDatabase database;
 	private MySQLiteHelper dbHelper;
-	private String[] allColumns = {MySQLiteHelper.COLUMN_ID, MySQLiteHelper.COLUMN_COMMENT};
+	
+	public MySQLiteHelper getDbHelper() {
+		return dbHelper;
+	}
+
+
+	private String[] allColumns = {MySQLiteHelper.COLUMN_ID, MySQLiteHelper.COLUMN_DESCRIPTION};
 	
 	
 	//constructor
@@ -33,9 +39,9 @@ public class CommentsDataSource {
 	}
 	
 	//updating content
-	public Comment createComment (String comment){
+	public Comment createComment (String str){
 		ContentValues values = new ContentValues(); // se comporte comme une hashmap
-		values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
+		values.put(MySQLiteHelper.COLUMN_DESCRIPTION, str);
 		long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null, values);
 		Cursor cursor = 
 				database.query(
@@ -50,18 +56,18 @@ public class CommentsDataSource {
 	}
 	
 	//surcharge
-	public Comment createComment (long id, String comment){
+	public Comment createComment (long id, String str){
         Boolean exist = existCommentWithId(id);
         
         if(exist == true){
             Comment existComment = getCommentWithId(id);
-            Comment updatedComment = updateComment(id, existComment, comment);
+            Comment updatedComment = updateComment(id, existComment, str);
             return updatedComment;
         }
         else {
             ContentValues values = new ContentValues();
             values.put(MySQLiteHelper.COLUMN_ID, id);
-            values.put(MySQLiteHelper.COLUMN_COMMENT, comment);
+            values.put(MySQLiteHelper.COLUMN_DESCRIPTION, str);
             long insertId = database.insert(MySQLiteHelper.TABLE_COMMENTS, null,
                     values);
             Cursor cursor = database.query(MySQLiteHelper.TABLE_COMMENTS,
@@ -79,7 +85,7 @@ public class CommentsDataSource {
  
         //values.put(MySQLiteHelper.COLUMN_ID, comment.getId());
         //values.put(MySQLiteHelper.COLUMN_COMMENT, comment.getComment());
-        values.put(MySQLiteHelper.COLUMN_COMMENT, descr);
+        values.put(MySQLiteHelper.COLUMN_DESCRIPTION, descr);
  
         database.update(MySQLiteHelper.TABLE_COMMENTS, values, MySQLiteHelper.COLUMN_ID + " = " +comment.getId(), null);
  
@@ -133,7 +139,7 @@ public class CommentsDataSource {
   private Comment cursorToComment(Cursor cursor) {
     Comment comment = new Comment();
     comment.setId(cursor.getLong(0));
-    comment.setComment(cursor.getString(1));
+    comment.setDescription(cursor.getString(1));
     return comment;
 	
   }

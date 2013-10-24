@@ -8,8 +8,13 @@ import android.util.Log;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
 		public static final String TABLE_COMMENTS = "comments";
-		public static final String COLUMN_ID = "_id";
-		public static final String COLUMN_COMMENT = "comment";
+		
+		public static String getTableComments() {
+			return TABLE_COMMENTS;
+		}
+
+		public static final String COLUMN_ID = "comments_id";
+		public static final String COLUMN_DESCRIPTION = "comments_description";
 		
 		public static final String DATABASE_NAME = "comments.db";
 		public static final int DATABASE_VERSION = 1;
@@ -17,7 +22,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		// creation of the database
 		  private static final String DATABASE_CREATE = "create table "
 			      + TABLE_COMMENTS + "(" + COLUMN_ID
-			      + " integer primary key autoincrement, " + COLUMN_COMMENT
+			      + " integer primary key autoincrement, " + COLUMN_DESCRIPTION
 			      + " text not null);";
 		
 		//constructor

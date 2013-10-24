@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.example.sqlitetest.Comment;
 import com.example.sqlitetest.CommentsDataSource;
 import com.example.sqlitetest.MainActivity;
+import com.example.sqlitetest.MySQLiteHelper;
 import com.example.sqlitetest.R;
 import com.google.gson.GsonBuilder;
 import com.google.gson.Gson;
@@ -63,10 +64,13 @@ public class BackTaskExportAllDB extends AsyncTask<Void, Integer, Integer> {
 	}
 		
 	protected Integer doInBackground(Void... params) { 
-		List<Comment> allComments = new ArrayList<Comment>((((MainActivity)this.mContext).getDatasource()).getAllComments());
+		CommentsDataSource tampon = ((MainActivity)this.mContext).getDatasource();
+		List<Comment> allComments = new ArrayList<Comment>(tampon.getAllComments());
+		String name = MySQLiteHelper.getTableComments();
 		Gson gson = new Gson();
 		String dataJson = gson.toJson(allComments);
-		postData(dataJson);
+		String jSonComplete = "{\""+name+"\":"+dataJson+"}";
+		postData(jSonComplete);
 				return null;
 				
     }

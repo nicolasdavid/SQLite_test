@@ -2,18 +2,18 @@ package com.example.sqlitetest;
 
 public class Comment {
 	private long id;
-	private String comment;
+	private String description;
 	
 	public long getId(){
 		return id;
 	}
 
-	public String getComment() {
-		return comment;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setDescription(String str) {
+		this.description = str;
 	}
 
 	public void setId(long id) {
@@ -23,7 +23,7 @@ public class Comment {
 	//will be used by the ArayAdapter in the ListView
 	@Override
 	public String toString() {
-		return "id =" + id + "&" + "\n comment =" + comment ;
+		return "id =" + id + "&" + "\n description =" + this.description ;
 	}
 	
 	
