@@ -25,8 +25,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.sqlitetest.Comment;
-import com.example.sqlitetest.CommentsDataSource;
+import com.example.sqlitetest.Project;
+import com.example.sqlitetest.LocalDataSource;
 import com.example.sqlitetest.MainActivity;
 import com.example.sqlitetest.R;
 

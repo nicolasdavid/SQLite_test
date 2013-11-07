@@ -28,8 +28,8 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.sqlitetest.Comment;
-import com.example.sqlitetest.CommentsDataSource;
+import com.example.sqlitetest.Project;
+import com.example.sqlitetest.LocalDataSource;
 import com.example.sqlitetest.MainActivity;
 import com.example.sqlitetest.MySQLiteHelper;
 import com.example.sqlitetest.R;
@@ -40,9 +40,9 @@ import com.google.gson.stream.JsonWriter;
 
 public class BackTaskExportAllDB extends AsyncTask<Void, Integer, Integer> {
 
-	private static final String TAG_COMMENTS = "comments";
-	private static final String TAG_ID = "comments_id";
-	private static final String TAG_DESCRIPTION = "comments_description";
+	private static final String TAG_ProjectS = "Projects";
+	private static final String TAG_ID = "Projects_id";
+	private static final String TAG_DESCRIPTION = "Projects_description";
 	
 	protected Activity mContext;
 	private ProgressBar mProgressBar;
@@ -64,12 +64,13 @@ public class BackTaskExportAllDB extends AsyncTask<Void, Integer, Integer> {
 	}
 		
 	protected Integer doInBackground(Void... params) { 
-		CommentsDataSource tampon = ((MainActivity)this.mContext).getDatasource();
-		List<Comment> allComments = new ArrayList<Comment>(tampon.getAllComments());
-		String name = MySQLiteHelper.getTableComments();
+		LocalDataSource tampon = ((MainActivity)this.mContext).getDatasource();
+		List<Project> allProjects = new ArrayList<Project>(tampon.getAllProjects());
+		String name = MySQLiteHelper.getTableProject();
 		Gson gson = new Gson();
-		String dataJson = gson.toJson(allComments);
-		String jSonComplete = "{\""+name+"\":"+dataJson+"}";
+		String dataJson = gson.toJson(allProjects);
+		//String jSonComplete = "{\""+name+"\":"+dataJson+"}";
+		String jSonComplete = dataJson;
 		postData(jSonComplete);
 				return null;
 				

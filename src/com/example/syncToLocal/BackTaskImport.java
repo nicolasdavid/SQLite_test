@@ -16,8 +16,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.example.sqlitetest.Comment;
-import com.example.sqlitetest.CommentsDataSource;
+import com.example.sqlitetest.Project;
+import com.example.sqlitetest.LocalDataSource;
 import com.example.sqlitetest.MainActivity;
 import com.example.sqlitetest.R;
 
@@ -141,20 +141,20 @@ public class BackTaskImport extends AsyncTask<String, Integer, Integer>{
    }
     
     public Boolean recComment(JSONObject jsonComment) {
-        CommentsDataSource datasource = new CommentsDataSource(mContext);
+        LocalDataSource datasource = new LocalDataSource(mContext);
         datasource.open();
          
         try {
-            JSONArray comments = jsonComment.getJSONArray(TAG_COMMENTS);
+            JSONArray projectsList = jsonComment.getJSONArray(TAG_COMMENTS);
               
-            for(int i = 0; i < comments.length(); i++){
-                Comment comment = null;
-                JSONObject c = comments.getJSONObject(i);
+            for(int i = 0; i < projectsList.length(); i++){
+                Project p1 = null;
+                JSONObject c = projectsList.getJSONObject(i);
  
                 Long id = c.getLong(TAG_ID);
                 String descr = c.getString(TAG_DESCRIPTION);
  
-                comment = datasource.createComment(id, descr);
+                p1 = datasource.createProject(id, descr);
             }
             datasource.close();
             return true;

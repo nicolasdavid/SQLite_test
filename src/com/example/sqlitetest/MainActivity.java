@@ -25,23 +25,19 @@ import com.example.syncToLocal.BackTaskImport;
 
 public class MainActivity extends ListActivity {
 	
-	private CommentsDataSource datasource;
+	private LocalDataSource datasource;
 	
-	public CommentsDataSource getDatasource() {
+	public LocalDataSource getDatasource() {
 		return datasource;
 	}
 
-	public void setDatasource(CommentsDataSource datasource) {
+	public void setDatasource(LocalDataSource datasource) {
 		this.datasource = datasource;
 	}
 
-
-
 	Button add = null;
 	Button delete = null;
-	
-	
-	
+
 	//creating the widget for AsyncTask
 	//private ProgressBar mProgressBar;
 	private Button importButton;
@@ -68,13 +64,13 @@ public class MainActivity extends ListActivity {
 	    exportDBButton = (Button) findViewById(R.id.btnLaunchDBExport);
         
 	    
-        datasource = new CommentsDataSource(this);
+        datasource = new LocalDataSource(this);
         datasource.open();
         
-        List<Comment> values = recupComment();
+        List<Project> values = recupProject();
         
         //use the SimpleCursorAdapter to show the elements in a ListView
-        ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this, android.R.layout.simple_expandable_list_item_1,values);
+        ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(this, android.R.layout.simple_expandable_list_item_1,values);
         setListAdapter(adapter);
         
         
@@ -102,15 +98,15 @@ public class MainActivity extends ListActivity {
     
     
     public void refreshList(){      
-    	List<Comment> values = recupComment();
-        ArrayAdapter<Comment> adapter = new ArrayAdapter<Comment>(this, android.R.layout.simple_expandable_list_item_1,values);
+    	List<Project> values = recupProject();
+        ArrayAdapter<Project> adapter = new ArrayAdapter<Project>(this, android.R.layout.simple_expandable_list_item_1,values);
         setListAdapter(adapter);  
    }
 
-    public List<Comment> recupComment() {
-        datasource = new CommentsDataSource(this);
+    public List<Project> recupProject() {
+        datasource = new LocalDataSource(this);
         datasource.open();
-        List<Comment> values = datasource.getAllComments();
+        List<Project> values = datasource.getAllProjects();
         return values;
          
     }
@@ -120,25 +116,25 @@ public class MainActivity extends ListActivity {
     //redefine the Onclick actions thanks to an attribute 
     private OnClickListener clickListenerBoutonsAdd = new OnClickListener(){
     	public void onClick(View view){
-    		ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
-    		Comment comment = null;
-    			String[] comments = new String[] {"Cool", "Very nice", "Hate it"};
+    		ArrayAdapter<Project> adapter = (ArrayAdapter<Project>) getListAdapter();
+    		Project Project = null;
+    			String[] Projects = new String[] {"Cool", "Very nice", "Hate it"};
     			int nextInt = new Random().nextInt(3);
-    			//save the new comment to database
-    			comment = datasource.createComment(comments[nextInt]);
-    			adapter.add(comment);
+    			//save the new Project to database
+    			Project = datasource.createProject(Projects[nextInt]);
+    			adapter.add(Project);
     			adapter.notifyDataSetChanged();
     	};
     };
     
     private OnClickListener clickListenerBoutonsDelete = new OnClickListener(){
     	public void onClick(View view){
-    		ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
-    		Comment comment = null;
+    		ArrayAdapter<Project> adapter = (ArrayAdapter<Project>) getListAdapter();
+    		Project Project = null;
     		if (getListAdapter().getCount()>0){
-				comment = (Comment) getListAdapter().getItem(0);
-				datasource.deleteComment(comment);
-				adapter.remove(comment);
+				Project = (Project) getListAdapter().getItem(0);
+				datasource.deleteProject(Project);
+				adapter.remove(Project);
 			}
     		
     			adapter.notifyDataSetChanged();
