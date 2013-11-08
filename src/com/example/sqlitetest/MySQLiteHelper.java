@@ -12,6 +12,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		 */
 		public static final String TABLE_PROJECT = "Project";
 		public static final String TABLE_GPSGEOM = "gpsGeom";
+		public static final String TABLE_GPSGEOM2 = "gpsGeom2";
 
 		
 		//creation of tables getters
@@ -33,27 +34,44 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		public static final String COLUMN_GPSGEOMID = "gpsGeom_id";
 		public static final String COLUMN_GPSGEOMCOORD = "gpsGeom_coord";
 		
-		public static final String DATABASE_NAME = "local.db";
-		public static final int DATABASE_VERSION = 1;
+		public static final String COLUMN_GPSGEOMID2 = "gpsGeom_id2";
+		public static final String COLUMN_GPSGEOMCOORD2 = "gpsGeom_coord2";
+		
+		public static final String DATABASE_NAME = "local3.db";
+		public static final int DATABASE_VERSION = 3;
 		
 		// query to create the database
 		private static final String 
 
-					DATABASE_CREATE = 
+					DATABASE_CREATE = 		
+					
+					"create table "
+						+ TABLE_GPSGEOM + " (" 
+						+ COLUMN_GPSGEOMID   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+						+ COLUMN_GPSGEOMCOORD + " text not null" 
+					+"); "
+						;
+					private static final String 
 
-					"CREATE TABLE "
-						+ TABLE_GPSGEOM + "(" 
-						+ COLUMN_GPSGEOMID   + "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-						+ COLUMN_GPSGEOMCOORD + " VARCHAR(255) " 
-					+");"
+					DATABASE_CREATE2 = 	
+					"create table "
+					+ TABLE_GPSGEOM2 + " (" 
+					+ COLUMN_GPSGEOMID2   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					+ COLUMN_GPSGEOMCOORD2 + " text not null" 
+				+"); "
+				;
+				private static final String 
 
-				    +"CREATE TABLE "
-					    + TABLE_PROJECT + "(" 
-					    + COLUMN_PROJECTID   + "INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,"
-					    + COLUMN_PROJECTNAME + " VARCHAR(255) " 
-					    + COLUMN_GPSGEOMID + " INTEGER " 
-					    + "FOREIGN KEY("+ COLUMN_GPSGEOMID +") REFERENCES "+TABLE_GPSGEOM+"("+COLUMN_GPSGEOMID+")"
-					+");"
+				DATABASE_CREATE3 = 	
+				    "create table "
+					    + TABLE_PROJECT + " (" 
+					    + COLUMN_PROJECTID   + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+					    + COLUMN_PROJECTNAME + " text not null, " 
+					    + COLUMN_GPSGEOMID + " INTEGER, " 
+					    + "FOREIGN KEY("+ COLUMN_GPSGEOMID +") REFERENCES "+TABLE_GPSGEOM+" ("+COLUMN_GPSGEOMID+")"
+				    +");"
+
+
 		;
 
 			     
@@ -66,7 +84,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
 		@Override
 		public void onCreate(SQLiteDatabase database) {
-			database.execSQL(DATABASE_CREATE);		
+			database.execSQL(getDatabaseCreate());	
+			database.execSQL(getDatabaseCreate2());
+			database.execSQL(getDatabaseCreate3());
 		}
 
 		@Override
@@ -79,6 +99,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 							+ TABLE_GPSGEOM +"; "
 					);
 			onCreate(db);		
+		}
+
+
+		public static String getDatabaseCreate() {
+			return DATABASE_CREATE;
+		}
+		public static String getDatabaseCreate2() {
+			return DATABASE_CREATE2;
+		}
+		public static String getDatabaseCreate3() {
+			return DATABASE_CREATE3;
 		}
 		
 }

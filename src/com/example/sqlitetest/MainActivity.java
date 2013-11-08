@@ -12,6 +12,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -66,7 +67,8 @@ public class MainActivity extends ListActivity {
 	    
         datasource = new LocalDataSource(this);
         datasource.open();
-        
+        String test = ((MySQLiteHelper)datasource.getDbHelper()).getDatabaseCreate();
+        Log.w("test1","debug");
         List<Project> values = recupProject();
         
         //use the SimpleCursorAdapter to show the elements in a ListView
@@ -104,9 +106,9 @@ public class MainActivity extends ListActivity {
    }
 
     public List<Project> recupProject() {
-        datasource = new LocalDataSource(this);
-        datasource.open();
-        List<Project> values = datasource.getAllProjects();
+       // datasource = new LocalDataSource(this);
+       // datasource.open();
+        List<Project> values = this.datasource.getAllProjects();
         return values;
          
     }

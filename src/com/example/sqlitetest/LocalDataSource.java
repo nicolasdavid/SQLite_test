@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 public class LocalDataSource {
 	
@@ -20,8 +21,9 @@ public class LocalDataSource {
 	}
 
 
-	private String[] allColumnsProject = {MySQLiteHelper.COLUMN_PROJECTID, MySQLiteHelper.COLUMN_PROJECTNAME, MySQLiteHelper.COLUMN_GPSGEOMCOORD};
+	private String[] allColumnsProject = {MySQLiteHelper.COLUMN_PROJECTID, MySQLiteHelper.COLUMN_PROJECTNAME, MySQLiteHelper.COLUMN_GPSGEOMID};
 	private String[] allColumnsGpsGeom = {MySQLiteHelper.COLUMN_GPSGEOMID, MySQLiteHelper.COLUMN_GPSGEOMCOORD};
+	private String[] allColumnsGpsGeom2 = {MySQLiteHelper.COLUMN_GPSGEOMID2, MySQLiteHelper.COLUMN_GPSGEOMCOORD2};
 	
 	
 	//constructor
