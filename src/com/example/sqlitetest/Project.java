@@ -1,6 +1,5 @@
 package com.example.sqlitetest;
 
-import java.util.UUID;
 
 public class Project {
 	private long project_id;

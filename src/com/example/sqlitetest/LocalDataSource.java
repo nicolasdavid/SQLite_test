@@ -22,8 +22,15 @@ public class LocalDataSource {
 
 
 	private String[] allColumnsProject = {MySQLiteHelper.COLUMN_PROJECTID, MySQLiteHelper.COLUMN_PROJECTNAME, MySQLiteHelper.COLUMN_GPSGEOMID};
+	private String[] allColumnsPhoto = {MySQLiteHelper.COLUMN_PHOTOID, MySQLiteHelper.COLUMN_PHOTODESCRIPTION, MySQLiteHelper.COLUMN_PHOTOAUTHOR, MySQLiteHelper.COLUMN_GPSGEOMID};
 	private String[] allColumnsGpsGeom = {MySQLiteHelper.COLUMN_GPSGEOMID, MySQLiteHelper.COLUMN_GPSGEOMCOORD};
-	private String[] allColumnsGpsGeom2 = {MySQLiteHelper.COLUMN_GPSGEOMID2, MySQLiteHelper.COLUMN_GPSGEOMCOORD2};
+	private String[] allColumnsPixelGeom = {MySQLiteHelper.COLUMN_PIXELGEOMID, MySQLiteHelper.COLUMN_PIXELGEOMCOORD};
+	private String[] allColumnsMaterial = {MySQLiteHelper.COLUMN_MATERIALID, MySQLiteHelper.COLUMN_MATERIALNAME};
+	private String[] allColumnsElementType = {MySQLiteHelper.COLUMN_ELEMENTTYPEID, MySQLiteHelper.COLUMN_ELEMENTTYPENAME};
+	private String[] allColumnsComposed = {MySQLiteHelper.COLUMN_PROJECTID, MySQLiteHelper.COLUMN_PHOTOID};
+	private String[] allColumnsElement = {MySQLiteHelper.COLUMN_ELEMENTID, MySQLiteHelper.COLUMN_PHOTOID,MySQLiteHelper.COLUMN_MATERIALID, MySQLiteHelper.COLUMN_GPSGEOMID,MySQLiteHelper.COLUMN_PIXELGEOMID, MySQLiteHelper.COLUMN_ELEMENTTYPEID, MySQLiteHelper.COLUMN_ELEMENTCOLOR};
+	
+	
 	
 	
 	//constructor
